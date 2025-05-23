@@ -22,16 +22,14 @@ const Body = () => {
 
     }
     catch(err){
-      if(fetchData===null){
-        return;
-      }
+      
       navigate("/login");
     }
     
   }
 
   useEffect(()=>{
-    if(fetchData)
+    
     fetchUser();
   },[]);
 

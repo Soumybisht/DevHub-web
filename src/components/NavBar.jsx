@@ -25,7 +25,7 @@ const NavBar = () => {
   </div>
   <div className="flex-none gap-2 mx-5">
     {user&&<p className=''>Welcome, {user.firstName}</p>}
-    <div className="dropdown dropdown-end">
+    {user&&<div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         {user&&(<div className="w-10 rounded-full">
           <img
@@ -45,7 +45,7 @@ const NavBar = () => {
         <li><a>Settings</a></li>
         <li><Link to="/login" onClick={()=>handleLogout()} >Logout</Link></li>
       </ul>
-    </div>
+    </div>}
   </div>
 </div>
   )

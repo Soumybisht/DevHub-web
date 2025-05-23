@@ -18,7 +18,6 @@ const Login = ()=>{
                 emailId:emailId,
                 password:password
             },{withCredentials:true})
-            console.log(res);
             dispatch(addUser(res.data));
             return navigate("/feed");
         }catch(err){
