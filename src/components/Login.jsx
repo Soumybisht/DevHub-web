@@ -3,16 +3,18 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../constants/BASE_URL';
 
 const Login = ()=>{
 
     const [emailId,setEmailId] = useState("");
     const [password,setPassword] = useState("");
+    const [error,setError] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const signIn =async ()=>{
         try{
-            const res = await axios.post("http://localhost:3000/login",{
+            const res = await axios.post(BASE_URL+"/login",{
                 emailId:emailId,
                 password:password
             },{withCredentials:true})
@@ -20,7 +22,7 @@ const Login = ()=>{
             dispatch(addUser(res.data));
             return navigate("/feed");
         }catch(err){
-            
+            setError("Invalid User Credentials!!");
         }
     }
   return (
@@ -65,6 +67,7 @@ const Login = ()=>{
                   onChange={(e)=>setPassword(e.target.value)}
                 />
               </div>
+              <p className='text-red-500'>{error}</p>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -90,10 +93,10 @@ const Login = ()=>{
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 
               >
-                Sign in
+                Login
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{' '}
+                Don't have an account yet?{' '}
                 <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                   Sign up
                 </a>
