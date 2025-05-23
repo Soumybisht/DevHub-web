@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUser } from './utils/userSlice';
+import { addUser } from '../utils/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ()=>{
 
     const [emailId,setEmailId] = useState("");
     const [password,setPassword] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const signIn =async ()=>{
         try{
             const res = await axios.post("http://localhost:3000/login",{
@@ -16,6 +18,7 @@ const Login = ()=>{
             },{withCredentials:true})
             console.log(res);
             dispatch(addUser(res.data));
+            return navigate("/feed");
         }catch(err){
             
         }
@@ -28,7 +31,10 @@ const Login = ()=>{
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Login in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" action="#" onSubmit={(e) => {
+                    e.preventDefault();  // Prevent form default submit
+                    signIn();            // Call your login function
+                }}>
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your email
@@ -82,7 +88,7 @@ const Login = ()=>{
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                onClick={()=>signIn()}
+                
               >
                 Sign in
               </button>
