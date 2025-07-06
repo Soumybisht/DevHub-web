@@ -11,7 +11,6 @@ const RequestCard = ({user}) => {
 
         const res = await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{withCredentials:true});
         dispatch(removeRequest(_id));
-        console.log(BASE_URL+"/request/review/"+status+"/"+_id);
     }
 
     const {firstName,lastName,age,gender,about,photo} = user.fromUserId;
@@ -32,7 +31,7 @@ const RequestCard = ({user}) => {
           </p>
           
         </div>
-        <p className=" text-sm text-white ">
+        <p className=" text-sm text-white max-w-72">
           {about}
         </p>
       </div>

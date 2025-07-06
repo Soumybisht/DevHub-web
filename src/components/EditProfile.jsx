@@ -9,8 +9,8 @@ const EditProfile = ({user}) => {
 
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
-  const [age, setAge] = useState(user.age);
-  const [gender, setGender] = useState(user.gender);
+  const [age, setAge] = useState(user.age||"");
+  const [gender, setGender] = useState(user.gender||"");
   const [photo, setPhoto] = useState(user.photo);
   const [about, setAbout] = useState(user.about);
   const [error, setError] = useState("");
@@ -26,7 +26,6 @@ const EditProfile = ({user}) => {
       }, { withCredentials: true });
 
       dispatch(addUser(res?.data.data));
-      console.log(res);
       setShowToast(true);
       setTimeout(()=>{
         setShowToast(false);
