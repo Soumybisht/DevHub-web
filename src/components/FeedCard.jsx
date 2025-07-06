@@ -1,8 +1,23 @@
+import axios from 'axios';
 import React from 'react'
+import { BASE_URL } from '../constants/BASE_URL';
+import { useDispatch } from 'react-redux';
+import { removeFeed } from '../utils/feedSlice';
 
 const FeedCard = ({user}) => {
 
-    const {firstName,lastName,age,gender,about,photo} = user;
+    const {_id,firstName,lastName,age,gender,about,photo} = user;
+    console.log(_id);
+    const dispatch = useDispatch();
+    const sendRequest = async (status,userId)=>{
+      try{
+        const res = await axios.post(BASE_URL+"/request/send/"+status+"/"+userId,{},{withCredentials:true});
+        dispatch(removeFeed(userId));
+      }catch(err){
+
+    }
+  }
+
   return (
     
     <div className="flex flex-col bg-base-300 shadow-sm border border-slate-200 rounded-lg my-6 w-96">
@@ -30,13 +45,15 @@ const FeedCard = ({user}) => {
       <div className="flex justify-center p-6 pt-2 gap-7">
         <button
           type="button"
-          className="min-w-32 rounded-md bg-primary py-2 px-4 border border-transparent text-center text-md text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-blue-600 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="min-w-32 rounded-md bg-primary py-2 px-4 border border-transparent text-center text-md text-white"
+          onClick={()=>sendRequest("ignored",_id)}
         >
           Ignore
         </button>
         <button
           type="button"
-          className="min-w-32 rounded-md bg-secondary py-2 px-4 border border-transparent text-center text-md text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-pink-600 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          className="min-w-32 rounded-md bg-secondary py-2 px-4 border border-transparent text-center text-md text-white"
+          onClick={()=>sendRequest("interested",_id)}
         >
           Interested
         </button>
