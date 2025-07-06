@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../constants/BASE_URL';
 import { removeUser } from '../utils/userSlice';
+import { removeConnection } from '../utils/connectionSlice';
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const NavBar = () => {
     try{
       await axios.post(BASE_URL+"/logout",{},{withCredentials:true});
       dispatch(removeUser());
+      dispatch(removeConnection());
       navigate("/login");
     }catch(err){
 
@@ -21,7 +23,7 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-300 rounded-md ">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">DEVHUB</a>
+    <Link to="/feed" className="btn btn-ghost text-xl">DEVHUB</Link>
   </div>
   <div className="flex-none gap-2 mx-5">
     {user&&<p className=''>Welcome, {user.firstName}</p>}
@@ -39,10 +41,10 @@ const NavBar = () => {
         <li>
           <Link to="/profile" className="justify-between">
             Profile
-            <span className="badge">New</span>
           </Link>
         </li>
-        <li><a>Settings</a></li>
+        <li><Link to="/connections">Connections</Link></li>
+        <li><Link to="/requests">Requests</Link></li>
         <li><Link to="/login" onClick={()=>handleLogout()} >Logout</Link></li>
       </ul>
     </div>}
